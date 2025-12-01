@@ -1,6 +1,17 @@
 [package]
 name = "cosmonaut-client"
 version = "0.1.0"
-edition = "2024"
+authors = ["mrpedrobraga <mrhenribraga@gmail.com>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+dioxus = { version = "0.6.0", features = [] }
+cosmonaut-server = { path = "../server" }
+
+[features]
+default = ["mobile"]
+web = ["dioxus/web"]
+desktop = ["dioxus/desktop"]
+mobile = ["dioxus/mobile"]
