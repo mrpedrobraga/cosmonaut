@@ -1,3 +1,5 @@
+use rocket::serde::{Deserialize, Serialize};
+
 pub struct User {
     pub id: Username,
     pub profiles: Vec<UserProfile>,
@@ -8,15 +10,19 @@ impl User {
     pub fn new(username: &str, display_name: &str) -> Self {
         User {
             id: Username(username.to_string()),
-            profiles: vec![
-                UserProfile::new("default", display_name, Vec::default(), "#ffffff")
-            ],
+            profiles: vec![UserProfile::new(
+                "default",
+                display_name,
+                Vec::default(),
+                "#ffffff",
+            )],
             current_profile: None,
         }
     }
 }
 
-#[derive(PartialEq, Eq, Ord, PartialOrd, Clone)]
+#[derive(PartialEq, Eq, Ord, PartialOrd, Clone, Serialize, Deserialize)]
+#[serde(crate = "rocket::serde")]
 pub struct Username(pub String);
 
 impl From<&str> for Username {
@@ -45,6 +51,8 @@ impl UserProfile {
     }
 }
 
+#[derive(Serialize, Deserialize, Clone)]
+#[serde(crate = "rocket::serde")]
 pub struct Author {
     pub user_id: Username,
     pub profile_id: Username,
@@ -52,6 +60,9 @@ pub struct Author {
 
 impl Author {
     pub fn representing(user_id: Username, profile_id: Username) -> Self {
-        Self { user_id, profile_id }
+        Self {
+            user_id,
+            profile_id,
+        }
     }
 }

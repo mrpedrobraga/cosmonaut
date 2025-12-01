@@ -1,13 +1,23 @@
+#[macro_use]
 extern crate rocket;
 
-use crate::message::{Message, MessageFragment};
-use crate::user::{Author, User, UserProfile, Username};
-use crate::world::{Neighbourhood, World};
+use rocket::get;
 
 mod message;
 mod user;
 mod world;
 
-fn main() {
-    
+#[launch]
+fn rocket() -> _ {
+    rocket::build().mount("/", routes![hello_world, sum])
+}
+
+#[get("/")]
+fn hello_world() -> String {
+    "Hello, World".into()
+}
+
+#[get("/sum/<a>/<b>")]
+fn sum(a: i32, b: i32) -> String {
+    format!("{} + {} = {}", a, b, a + b)
 }

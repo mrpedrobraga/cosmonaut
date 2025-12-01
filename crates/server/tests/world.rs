@@ -1,5 +1,5 @@
 use cosmonaut_server::{
-    message::{Message, MessageFragment},
+    message::{MessageFragment, MessagePayload},
     user::{Author, User, UserProfile, Username},
     world::{Neighbourhood, World},
 };
@@ -10,7 +10,7 @@ macro_rules! message {
     ($world:expr, $neighbourhood_id:expr; $senderu:expr, $senderp:expr => $content:expr) => {
         $world.insert_message(
             $neighbourhood_id,
-            Message::new(
+            MessagePayload::new(
                 Author::representing(Username::from($senderu), Username::from($senderp)),
                 vec![MessageFragment::Text($content.into())],
             ),

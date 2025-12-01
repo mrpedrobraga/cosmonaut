@@ -1,4 +1,4 @@
-use crate::message::{Message, MessageEntry, MessageFragment, MessageId};
+use crate::message::{MessagePayload, MessageEntry, MessageFragment, MessageId};
 use crate::user::{Author, User, UserProfile, Username};
 use std::cmp::PartialEq;
 use chrono::DateTime;
@@ -56,7 +56,7 @@ impl World {
     }
 
     /// Inserts a new message into the world.
-    pub fn insert_message(&mut self, neighbourhood_id: &NeighbourhoodId, message: Message) {
+    pub fn insert_message(&mut self, neighbourhood_id: &NeighbourhoodId, message: MessagePayload) {
         if let Some(neighbourhood) = self
             .neighbourhoods
             .iter_mut()
